@@ -51,7 +51,7 @@ class MainTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetHistograms()
 	{
-		$ret = $this->sls->getHistograms('TestTopic', time() - 3600, time());
+		$ret = $this->sls->getHistograms(time() - 3600, time(), 'TestTopic');
 
 		$header = $ret->getHeader('_info');
 		$this->assertEquals($header['http_code'], 200);
@@ -59,7 +59,7 @@ class MainTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetLogs()
 	{
-		$ret = $this->sls->getLogs('TestTopic', time() - 3600, time());
+		$ret = $this->sls->getLogs(time() - 3600, time(), 'TestTopic');
 
 		$header = $ret->getHeader('_info');
 		$this->assertEquals($header['http_code'], 200);

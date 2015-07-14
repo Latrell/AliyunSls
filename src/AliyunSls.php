@@ -32,7 +32,9 @@ class AliyunSls
 	 */
 	public function listLogstores($project = '')
 	{
-		$request = new Aliyun_Sls_Models_ListLogstoresRequest($project ?  : $this->project);
+		$project = $project ?  : $this->project;
+
+		$request = new Aliyun_Sls_Models_ListLogstoresRequest($project);
 		$response = $this->client->listLogstores($request);
 		return $response;
 	}
@@ -48,13 +50,16 @@ class AliyunSls
 	 */
 	public function putLogs($topic, $contents, $project = '', $logstore = '')
 	{
+		$project = $project ?  : $this->project;
+		$logstore = $logstore ?  : $this->logstore;
+
 		$log_item = new Aliyun_Sls_Models_LogItem();
 		$log_item->setTime(time());
 		$log_item->setContents($contents);
 		$logitems = [
 			$log_item
 		];
-		$request = new Aliyun_Sls_Models_PutLogsRequest($project ?  : $this->project, $logstore ?  : $this->logstore, $topic, null, $logitems);
+		$request = new Aliyun_Sls_Models_PutLogsRequest($project, $logstore, $topic, null, $logitems);
 
 		$response = $this->client->putLogs($request);
 
@@ -70,7 +75,10 @@ class AliyunSls
 	 */
 	public function listTopics($project = '', $logstore = '')
 	{
-		$request = new Aliyun_Sls_Models_ListTopicsRequest($project ?  : $this->project, $logstore ?  : $this->logstore);
+		$project = $project ?  : $this->project;
+		$logstore = $logstore ?  : $this->logstore;
+
+		$request = new Aliyun_Sls_Models_ListTopicsRequest($project, $logstore);
 
 		$response = $this->client->listTopics($request);
 
@@ -80,17 +88,20 @@ class AliyunSls
 	/**
 	 * 查询Logstore中的日志在时间轴上的分布。
 	 *
-	 * @param string $topic
 	 * @param integer $from
 	 * @param integer $to
+	 * @param string $topic
 	 * @param string $query
 	 * @param string $project
 	 * @param string $logstore
 	 * @return Aliyun_Sls_Models_GetHistogramsResponse
 	 */
-	public function getHistograms($topic, $from, $to, $query = '', $project = '', $logstore = '')
+	public function getHistograms($from = null, $to = null, $topic = null, $query = null, $project = null, $logstore = null)
 	{
-		$request = new Aliyun_Sls_Models_GetHistogramsRequest($project ?  : $this->project, $logstore ?  : $this->logstore, $from, $to, $topic, $query);
+		$project = $project ?  : $this->project;
+		$logstore = $logstore ?  : $this->logstore;
+
+		$request = new Aliyun_Sls_Models_GetHistogramsRequest($project, $logstore, $from, $to, $topic, $query);
 
 		$response = $this->client->getHistograms($request);
 
@@ -100,17 +111,23 @@ class AliyunSls
 	/**
 	 * 查询Logstore中的日志数据。
 	 *
+	 * @param string $from
+	 * @param string $to
 	 * @param string $topic
-	 * @param integer $from
-	 * @param integer $to
 	 * @param string $query
+	 * @param string $line
+	 * @param string $offset
+	 * @param string $reverse
 	 * @param string $project
 	 * @param string $logstore
 	 * @return Aliyun_Sls_Models_GetLogsResponse
 	 */
-	public function getLogs($topic, $from, $to, $query = '', $project = '', $logstore = '')
+	public function getLogs($from = null, $to = null, $topic = null, $query = null, $line = 100, $offset = null, $reverse = null, $project = null, $logstore = null)
 	{
-		$request = new Aliyun_Sls_Models_GetLogsRequest($project ?  : $this->project, $logstore ?  : $this->logstore, $from, $to, $topic, $query, 100, 0, False);
+		$project = $project ?  : $this->project;
+		$logstore = $logstore ?  : $this->logstore;
+
+		$request = new Aliyun_Sls_Models_GetLogsRequest($project, $logstore, $from, $to, $topic, $query, $line, $offset, $reverse);
 
 		$response = $this->client->getLogs($request);
 		return $response;
