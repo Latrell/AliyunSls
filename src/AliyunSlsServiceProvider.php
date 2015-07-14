@@ -31,7 +31,7 @@ class AliyunSlsServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->app->singleton('aliyun.sls', function ($app) {
-			$config = $app->config;
+			$config = $app->config->get('latrell-aliyun-sls');
 			return new AliyunSls($config['endpoint'], $config['access_key_id'], $config['access_key'], $config['project'], $config['logstore']);
 		});
 	}

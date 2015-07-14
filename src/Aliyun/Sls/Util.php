@@ -6,7 +6,7 @@
  */
 
 class Aliyun_Sls_Util {
-    
+
     /**
      * Get the local machine ip address.
      *
@@ -15,7 +15,7 @@ class Aliyun_Sls_Util {
     public static function getLocalIp() {
         try { // if exec can be used
             $preg = "/\A((([0-9]?[0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))\.){3}(([0-9]?[0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))\Z/";
-            
+
             if ( PATH_SEPARATOR==':' ) { // linux
                 exec("ifconfig", $out, $stats);
                 if (!empty($out)) {
@@ -40,7 +40,7 @@ class Aliyun_Sls_Util {
             }
         } catch ( Exception $ex ){
         }
-        
+
         if (isset($_ENV["HOSTNAME"]))
             $MachineName = $_ENV["HOSTNAME"];
         else if (isset($_ENV["COMPUTERNAME"]))
@@ -49,10 +49,10 @@ class Aliyun_Sls_Util {
             $MachineName = "";
         if ($MachineName!="")
             return $MachineName;
-        
+
         return '127.0.0.1';
     }
-    
+
     /**
      * If $gonten is raw IP address, return true.
      *
@@ -63,9 +63,10 @@ class Aliyun_Sls_Util {
         for($i=0;$i<count($ip);++$i)
             if($ip[$i]>255)
                 return 0;
-        return ereg("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", $gonten);
+        // return ereg("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", $gonten);
+        return preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $gonten);
     }
-    
+
     /**
      * Calculate string $value MD5.
      *
@@ -74,7 +75,7 @@ class Aliyun_Sls_Util {
     public static function calMD5($value) {
         return strtoupper(md5($value));
     }
-    
+
     /**
      * Calculate string $content hmacSHA1 with secret key $key.
      *
@@ -84,7 +85,7 @@ class Aliyun_Sls_Util {
         $signature = hash_hmac("sha1", $content, $key, true);
         return base64_encode($signature);
     }
-    
+
     /**
      * Change $logGroup to bytes.
      *
@@ -100,7 +101,7 @@ class Aliyun_Sls_Util {
         fclose($mem);
         return $bytes;
     }
-    
+
     /**
      * Get url encode.
      *
@@ -109,7 +110,7 @@ class Aliyun_Sls_Util {
     public static function urlEncodeValue($value) {
         return urlencode ( $value );
     }
-    
+
     /**
      * Get url encode.
      *
@@ -129,7 +130,7 @@ class Aliyun_Sls_Util {
         }
         return $url;
     }
-    
+
     /**
      * Get canonicalizedSLSHeaders string as defined.
      *
@@ -149,7 +150,7 @@ class Aliyun_Sls_Util {
         }
         return $content;
     }
-    
+
     /**
      * Get canonicalizedResource string as defined.
      *
@@ -171,7 +172,7 @@ class Aliyun_Sls_Util {
         }
         return $resource;
     }
-    
+
     /**
      * Get request authorization string as defined.
      *
