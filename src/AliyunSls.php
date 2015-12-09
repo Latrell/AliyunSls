@@ -132,4 +132,26 @@ class AliyunSls
 		$response = $this->client->getLogs($request);
 		return $response;
 	}
+
+	public function getProject()
+	{
+		return $this->project;
+	}
+
+	public function setProject($value)
+	{
+		$this->project = $value;
+		return $this;
+	}
+
+	public function getLogstore()
+	{
+		return $this->logstore;
+	}
+
+	public function setLogstore($value)
+	{
+		$this->logstore = $value;
+		return $this;
+	}
 }
